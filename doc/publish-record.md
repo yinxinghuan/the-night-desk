@@ -20,4 +20,8 @@
 - 2026-07-14：`npm ci` 与 `npm run build` 通过，Vite `base: './'`。
 - 2026-07-14：UUID 注入与唯一性检查通过。
 - 2026-07-14：公开仓库隐私审计完成；源头像 URL、绿幕原图、transit 日志和制作脚本不进入公开 Git 历史。
-- GitHub Pages workflow、线上 bundle、games.json 与海报 URL 的最终验证在部署完成后追加。
+- 2026-07-14：GitHub Pages workflow `29284776300` 成功。
+- 2026-07-14：线上 HTML 返回 `index-FoiFPjk7.js`；bundle 实测包含 `THE NIGHT DESK`、`ghostpixel` 和本游戏 UUID。
+- 2026-07-14：线上 `poster.png`、intro 图、`main.zip`、games 列表海报均返回 HTTP 200。
+- 2026-07-14：公开 `games.json` 已将本游戏放在新作区并包含 UUID、strategy 分类与 zipurl。
+- 平台客户端是否可见仍取决于同事的迁移工具将 games.json 重新入库；本工作区没有该迁移工具，不能把 GitHub 清单更新误报为平台 DB 已更新。
