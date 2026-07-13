@@ -1,0 +1,835 @@
+@ink: #090b14;
+@indigo: #15182a;
+@paper: #f2e9d8;
+@mint: #9ef4d3;
+@coral: #ff6f7d;
+@brass: #d6ad63;
+
+.pq-shell {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  overflow: hidden;
+  isolation: isolate;
+  color: @paper;
+  background:
+    radial-gradient(circle at 62% 30%, rgba(77, 96, 126, 0.42), transparent 36%),
+    linear-gradient(165deg, #1b2036 0%, @ink 54%, #05060a 100%);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+
+  &__grain {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    opacity: 0.17;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+  }
+
+  &__lamp {
+    position: absolute;
+    z-index: 2;
+    top: -92px;
+    left: 50%;
+    width: 270px;
+    height: 260px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(214, 173, 99, 0.24), rgba(158, 244, 211, 0.07) 32%, transparent 70%);
+    filter: blur(7px);
+  }
+
+  &.is-critical {
+    animation: pq-critical-shake 280ms ease-in-out;
+  }
+}
+
+.pq-start {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  padding: 34px 28px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__scene, &__veil {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__scene { object-fit: cover; pointer-events: none; }
+  &__veil {
+    background:
+      linear-gradient(180deg, rgba(5, 7, 13, 0.18), transparent 42%, rgba(5, 7, 13, 0.92) 82%),
+      radial-gradient(circle at 50% 43%, transparent 18%, rgba(5, 7, 13, 0.65) 82%);
+  }
+
+  &__identity {
+    position: absolute;
+    z-index: 2;
+    top: 220px;
+    left: 50%;
+    width: 260px;
+    height: 320px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 24px 12px 28px;
+      border: 1px solid rgba(214, 173, 99, 0.28);
+      border-radius: 48% 48% 30px 30px;
+      box-shadow: inset 0 0 70px rgba(158, 244, 211, 0.07), 0 24px 80px rgba(0, 0, 0, 0.44);
+    }
+
+    img {
+      position: relative;
+      width: 224px;
+      height: 252px;
+      object-fit: contain;
+      border-radius: 46% 46% 22% 22%;
+      filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.72));
+      pointer-events: none;
+    }
+  }
+
+  &__shift {
+    position: absolute;
+    top: -18px;
+    color: rgba(242, 233, 216, 0.58);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+
+  &__name {
+    position: relative;
+    margin-top: -2px;
+    padding: 5px 14px;
+    color: @ink;
+    background: @brass;
+    border-radius: 2px;
+    font: 700 11px/1 "Avenir Next", sans-serif;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  &__header, &__footer { position: relative; z-index: 3; }
+
+  &__header {
+    p {
+      margin-bottom: 5px;
+      color: @mint;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+    }
+
+    h1 {
+      max-width: 320px;
+      font: 500 42px/0.91 "Iowan Old Style", Baskerville, "Times New Roman", serif;
+      letter-spacing: -0.035em;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    span {
+      display: block;
+      max-width: 270px;
+      margin-top: 11px;
+      color: rgba(242, 233, 216, 0.7);
+      font: italic 15px/1.35 "Iowan Old Style", Baskerville, serif;
+    }
+  }
+
+  &__footer {
+    p {
+      margin-bottom: 12px;
+      color: rgba(242, 233, 216, 0.58);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+  }
+}
+
+.pq-primary {
+  position: relative;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #10131d;
+  background: @brass;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255, 255, 255, 0.35);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 110ms ease, filter 180ms ease;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgba(9, 11, 20, 0.48);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  &::before { left: 10px; }
+  &::after { right: 10px; }
+
+  &:active { transform: scale(0.97); }
+  &:focus-visible { outline: 3px solid @mint; outline-offset: 3px; }
+  i { font-style: normal; font-size: 20px; }
+}
+
+.pq-game {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  padding: 18px 16px 16px 28px;
+  display: grid;
+  grid-template-rows: 102px 322px 1fr;
+}
+
+.pq-hud {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 9px;
+  align-items: start;
+
+  &__brand {
+    padding-top: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    span {
+      color: @coral;
+      font: 800 13px/1 "SFMono-Regular", Consolas, monospace;
+      letter-spacing: 0.08em;
+    }
+
+    strong {
+      max-width: 72px;
+      overflow: hidden;
+      color: rgba(242, 233, 216, 0.58);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+}
+
+.pq-gauges {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.pq-gauge {
+  position: relative;
+  min-width: 0;
+  padding: 7px 3px 6px;
+  text-align: center;
+  background: rgba(8, 10, 18, 0.58);
+  border: 1px solid rgba(214, 173, 99, 0.18);
+  border-radius: 3px;
+
+  &__dial {
+    position: relative;
+    width: 38px;
+    height: 22px;
+    margin: 0 auto 4px;
+    overflow: hidden;
+    border: 1px solid rgba(214, 173, 99, 0.38);
+    border-bottom: 0;
+    border-radius: 30px 30px 0 0;
+    background: radial-gradient(circle at 50% 100%, #242941 0 14%, #0b0e18 16% 100%);
+
+    i {
+      position: absolute;
+      left: 18px;
+      bottom: -1px;
+      width: 1px;
+      height: 18px;
+      background: @mint;
+      box-shadow: 0 0 5px @mint;
+      transform-origin: 50% 100%;
+      transition: transform 440ms cubic-bezier(.22,.7,.2,1);
+    }
+  }
+
+  span {
+    display: block;
+    overflow: hidden;
+    color: rgba(242, 233, 216, 0.52);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  b { display: block; margin-top: 2px; color: @paper; font: 700 10px/1 Consolas, monospace; }
+
+  &.is-critical {
+    border-color: rgba(255, 111, 125, 0.72);
+    animation: pq-gauge-alarm 1.4s ease-in-out infinite;
+    .pq-gauge__dial i { background: @coral; box-shadow: 0 0 6px @coral; }
+  }
+}
+
+.pq-floor-track {
+  position: absolute;
+  z-index: 6;
+  top: 126px;
+  left: 10px;
+  bottom: 300px;
+  width: 7px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: rgba(214, 173, 99, 0.2);
+  }
+
+  i {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border: 1px solid rgba(214, 173, 99, 0.35);
+    border-radius: 50%;
+    background: @ink;
+    transition: background 260ms ease, box-shadow 260ms ease;
+
+    &.is-lit { background: @brass; box-shadow: 0 0 9px rgba(214, 173, 99, 0.8); }
+  }
+}
+
+.pq-portrait {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  &__halo {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    width: 280px;
+    height: 280px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(158, 244, 211, 0.15), transparent 64%);
+    filter: blur(8px);
+  }
+
+  img {
+    position: relative;
+    z-index: 2;
+    width: 264px;
+    height: 306px;
+    object-fit: contain;
+    object-position: center bottom;
+    border-radius: 45% 45% 18% 18%;
+    filter: drop-shadow(0 22px 35px rgba(0, 0, 0, 0.72));
+    pointer-events: none;
+    animation: pq-portrait-enter 220ms ease-out both;
+  }
+
+  &__badge {
+    position: absolute;
+    z-index: 4;
+    right: 2px;
+    bottom: 28px;
+    width: 92px;
+    padding: 8px 7px 7px;
+    color: @ink;
+    background: @brass;
+    border-radius: 2px;
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.38);
+    transform: rotate(-3deg);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -24px;
+      width: 1px;
+      height: 24px;
+      background: @brass;
+    }
+
+    span { display: block; font-size: 7px; font-weight: 800; letter-spacing: 0.17em; }
+    b { display: block; overflow: hidden; margin-top: 3px; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+  }
+
+  &--worried img { filter: saturate(0.78) drop-shadow(0 22px 35px rgba(0, 0, 0, 0.72)); }
+  &--defiant .pq-portrait__halo { background: radial-gradient(circle, rgba(255, 111, 125, 0.18), transparent 64%); }
+  &--exhausted img { filter: saturate(0.45) brightness(0.72) drop-shadow(0 22px 35px rgba(0, 0, 0, 0.78)); }
+}
+
+.pq-ledger {
+  position: relative;
+  z-index: 5;
+  min-height: 0;
+  padding: 16px 15px 14px;
+  background:
+    linear-gradient(90deg, rgba(214, 173, 99, 0.08) 0 1px, transparent 1px 100%) 28px 0 / 100% 100% no-repeat,
+    linear-gradient(160deg, rgba(27, 31, 51, 0.98), rgba(11, 13, 23, 0.98));
+  border: 1px solid rgba(214, 173, 99, 0.31);
+  border-radius: 3px 18px 18px 3px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.52), inset 6px 0 rgba(0, 0, 0, 0.18);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 20px;
+    bottom: 20px;
+    width: 9px;
+    background: repeating-linear-gradient(180deg, @brass 0 7px, transparent 7px 18px);
+    opacity: 0.65;
+  }
+
+  &__topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgba(242, 233, 216, 0.48);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    b { color: @mint; font: 700 10px/1 Consolas, monospace; }
+  }
+
+  h2 {
+    margin-top: 8px;
+    color: @paper;
+    font: 500 23px/1.05 "Iowan Old Style", Baskerville, serif;
+    letter-spacing: -0.015em;
+  }
+
+  > p {
+    min-height: 48px;
+    margin-top: 7px;
+    color: rgba(242, 233, 216, 0.74);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+}
+
+.pq-choices {
+  margin-top: 13px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.pq-keytag {
+  position: relative;
+  min-width: 0;
+  min-height: 64px;
+  padding: 12px 9px 8px;
+  color: #131722;
+  background: linear-gradient(135deg, #f0d397, @brass 60%, #aa7837);
+  border: 0;
+  border-radius: 4px 4px 15px 15px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255, 255, 255, 0.48);
+  cursor: pointer;
+  transition: transform 110ms ease, opacity 180ms ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -7px;
+    width: 13px;
+    height: 13px;
+    transform: translateX(-50%);
+    background: @indigo;
+    border: 2px solid #c4934f;
+    border-radius: 50%;
+  }
+
+  i {
+    position: absolute;
+    left: 50%;
+    top: -22px;
+    width: 1px;
+    height: 15px;
+    background: rgba(214, 173, 99, 0.65);
+  }
+
+  span { display: block; font-size: 12px; font-weight: 800; line-height: 1.15; }
+  small { display: block; margin-top: 5px; color: rgba(19, 23, 34, 0.58); font: 700 8px/1 Consolas, monospace; }
+  &:active { transform: scale(0.97) rotate(1deg); }
+  &:disabled { cursor: default; filter: grayscale(0.55); opacity: 0.45; }
+  &:focus-visible { outline: 3px solid @mint; outline-offset: 3px; }
+}
+
+.pq-feedback {
+  min-height: 82px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(214, 173, 99, 0.2);
+  animation: pq-feedback-in 220ms ease-out both;
+
+  &__particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    i {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: @mint;
+      box-shadow: 0 0 6px currentColor;
+      animation: pq-feedback-particle 680ms ease-out both;
+
+      &:nth-child(2n) { color: @brass; background: @brass; }
+      &:nth-child(3n) { color: @coral; background: @coral; }
+      &:nth-child(1) { --x: -108px; --y: 24px; animation-delay: 10ms; }
+      &:nth-child(2) { --x: -84px; --y: -12px; animation-delay: 80ms; }
+      &:nth-child(3) { --x: -62px; --y: 34px; animation-delay: 25ms; }
+      &:nth-child(4) { --x: -38px; --y: -28px; animation-delay: 105ms; }
+      &:nth-child(5) { --x: -16px; --y: 18px; animation-delay: 50ms; }
+      &:nth-child(6) { --x: 8px; --y: -36px; animation-delay: 0ms; }
+      &:nth-child(7) { --x: 28px; --y: 28px; animation-delay: 90ms; }
+      &:nth-child(8) { --x: 48px; --y: -22px; animation-delay: 35ms; }
+      &:nth-child(9) { --x: 70px; --y: 20px; animation-delay: 115ms; }
+      &:nth-child(10) { --x: 92px; --y: -8px; animation-delay: 55ms; }
+      &:nth-child(11) { --x: 112px; --y: 32px; animation-delay: 15ms; }
+      &:nth-child(12) { --x: 126px; --y: -26px; animation-delay: 70ms; }
+    }
+  }
+
+  p { color: @paper; font: italic 13px/1.35 "Iowan Old Style", Baskerville, serif; }
+
+  > div:last-child { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+
+  span {
+    padding: 4px 7px;
+    border-radius: 2px;
+    font: 800 8px/1 Consolas, monospace;
+    letter-spacing: 0.04em;
+    animation: pq-score-pop 760ms ease-out both;
+    &.is-positive { color: @mint; background: rgba(158, 244, 211, 0.09); }
+    &.is-negative { color: @coral; background: rgba(255, 111, 125, 0.09); }
+  }
+}
+
+.pq-interlude, .pq-result {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  background: #080a12;
+  animation: pq-scene-in 420ms ease-out both;
+}
+
+.pq-interlude {
+  padding: 92px 30px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  > img, &__veil {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  > img { object-fit: cover; }
+  &__veil { background: linear-gradient(180deg, rgba(8, 10, 18, 0.15), rgba(8, 10, 18, 0.95) 76%); }
+  > span, h2, p, button { position: relative; z-index: 2; }
+  > span { color: @coral; font: 800 11px/1 Consolas, monospace; letter-spacing: 0.16em; }
+  h2 { max-width: 320px; margin-top: 10px; font: 500 40px/0.95 "Iowan Old Style", Baskerville, serif; }
+  p { margin: 14px 0 24px; color: rgba(242, 233, 216, 0.7); font-size: 14px; line-height: 1.55; }
+}
+
+.pq-result {
+  &__scene, &__veil {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &__scene { object-fit: cover; }
+  &__veil {
+    background: linear-gradient(180deg, rgba(6, 8, 14, 0.18), rgba(6, 8, 14, 0.64) 48%, #070912 72%);
+  }
+
+  &__portrait {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    width: 300px;
+    height: 390px;
+    transform: translateX(-50%);
+    img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; filter: drop-shadow(0 22px 40px rgba(0,0,0,.7)); }
+  }
+
+  &__content {
+    position: absolute;
+    z-index: 3;
+    left: 24px;
+    right: 24px;
+    bottom: 22px;
+    padding: 20px 20px 16px;
+    background: rgba(12, 15, 26, 0.9);
+    border: 1px solid rgba(214, 173, 99, 0.32);
+    border-radius: 4px 20px 4px 20px;
+    backdrop-filter: blur(14px);
+    animation: pq-result-panel-in 420ms cubic-bezier(.2,.76,.22,1) 120ms both;
+
+    > span { color: @mint; font-size: 9px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+    h2 { margin-top: 6px; font: 500 30px/1 "Iowan Old Style", Baskerville, serif; }
+    > p { margin-top: 8px; color: rgba(242,233,216,.7); font-size: 12px; line-height: 1.45; }
+    > small { display: block; margin-top: 8px; color: rgba(242,233,216,.42); font-size: 9px; }
+  }
+
+  &__score {
+    margin: 14px 0 9px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    div { padding: 9px 11px; background: rgba(214,173,99,.07); border-left: 2px solid @brass; }
+    span { display: block; color: rgba(242,233,216,.48); font-size: 8px; letter-spacing: .08em; }
+    b { display: block; margin-top: 2px; font: 700 18px/1 Consolas, monospace; }
+  }
+
+  &__stats {
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    span { min-width: 0; color: rgba(242,233,216,.5); font-size: 7px; text-align: center; }
+    b { display: block; margin-top: 2px; color: @paper; font: 700 10px/1 Consolas, monospace; }
+  }
+
+  &__home {
+    width: 100%;
+    margin-top: 7px;
+    padding: 8px;
+    color: rgba(242, 233, 216, 0.58);
+    background: none;
+    border: 0;
+    font-size: 10px;
+    cursor: pointer;
+  }
+
+  &.is-failure .pq-result__content > span { color: @coral; }
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 16%;
+    width: 360px;
+    height: 360px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(158, 244, 211, 0.16), transparent 68%);
+    pointer-events: none;
+    animation: pq-result-glow 900ms ease-out both;
+  }
+}
+
+@keyframes pq-portrait-enter {
+  from { opacity: 0.25; transform: translateY(5px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pq-feedback-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pq-score-pop {
+  0% { opacity: 0; transform: translateY(7px); }
+  20% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(-3px); }
+}
+
+@keyframes pq-scene-in {
+  from { opacity: 0; transform: scale(1.025); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pq-gauge-alarm {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 111, 125, 0); }
+  50% { box-shadow: 0 0 12px rgba(255, 111, 125, 0.22); }
+}
+
+@keyframes pq-feedback-particle {
+  0% { opacity: 0; transform: translate(0, 18px) scale(0.4); }
+  22% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(1.25); }
+}
+
+@keyframes pq-critical-shake {
+  0%, 100% { translate: 0 0; }
+  25% { translate: -3px 0; }
+  50% { translate: 3px 0; }
+  75% { translate: -2px 0; }
+}
+
+@keyframes pq-result-panel-in {
+  from { opacity: 0; transform: translateY(36px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pq-result-glow {
+  from { opacity: 0; transform: translateX(-50%) scale(0.55); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pq-shell *, .pq-shell *::before, .pq-shell *::after {
+    animation-duration: 120ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+  }
+}
+
+// Variant skin: Isabel / Autumn Lost & Found. Layout and mechanics intentionally stay shared.
+.pq-shell--autumn-kiosk {
+  color: #f5e7c8;
+  background:
+    radial-gradient(circle at 72% 24%, rgba(217, 154, 61, 0.38), transparent 34%),
+    linear-gradient(165deg, #526b4e 0%, #354a58 52%, #201d1c 100%);
+
+  .pq-shell__lamp {
+    background: radial-gradient(circle, rgba(245, 211, 132, 0.44), rgba(217, 154, 61, 0.12) 34%, transparent 70%);
+  }
+
+  .pq-start__veil {
+    background:
+      linear-gradient(180deg, rgba(40, 34, 27, 0.12), transparent 43%, rgba(36, 29, 25, 0.9) 82%),
+      radial-gradient(circle at 50% 43%, transparent 22%, rgba(44, 49, 39, 0.56) 86%);
+  }
+
+  .pq-start__header p,
+  .pq-ledger__topline b,
+  .pq-result__content > span { color: #f2c66d; }
+
+  .pq-start__header span,
+  .pq-start__footer p,
+  .pq-hud__brand strong,
+  .pq-ledger p,
+  .pq-result__content > p,
+  .pq-result__content > small { color: rgba(245, 231, 200, 0.72); }
+
+  .pq-primary,
+  .pq-start__name,
+  .pq-portrait__badge {
+    color: #2b241d;
+    background: #d99a3d;
+  }
+
+  .pq-primary:focus-visible { outline-color: #f2c66d; }
+  .pq-hud__brand span { color: #f2c66d; }
+
+  .pq-gauge {
+    background: rgba(36, 42, 35, 0.66);
+    border-color: rgba(217, 154, 61, 0.27);
+  }
+
+  .pq-gauge__dial {
+    border-color: rgba(217, 154, 61, 0.48);
+    background: radial-gradient(circle at 50% 100%, #526b4e 0 14%, #242b27 16% 100%);
+  }
+
+  .pq-gauge__dial i { background: #f2c66d; }
+  .pq-gauge b,
+  .pq-ledger h2,
+  .pq-feedback p,
+  .pq-result__stats b { color: #f5e7c8; }
+
+  .pq-floor-track::before { background: rgba(217, 154, 61, 0.24); }
+  .pq-floor-track i { border-color: rgba(217, 154, 61, 0.42); background: #354a58; }
+  .pq-floor-track i.is-lit { background: #d99a3d; box-shadow: 0 0 9px rgba(217, 154, 61, 0.8); }
+
+  .pq-portrait__halo {
+    background: radial-gradient(circle, rgba(242, 198, 109, 0.2), rgba(82, 107, 78, 0.1) 43%, transparent 68%);
+  }
+
+  .pq-portrait img {
+    width: 270px;
+    height: 306px;
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .pq-ledger {
+    background:
+      linear-gradient(180deg, rgba(75, 57, 42, 0.98), rgba(40, 35, 31, 0.99)),
+      #302923;
+    border-color: rgba(217, 154, 61, 0.42);
+  }
+
+  .pq-ledger::before { background: repeating-linear-gradient(180deg, #d99a3d 0 7px, transparent 7px 18px); }
+
+  .pq-keytag {
+    color: #32261c;
+    background: linear-gradient(135deg, #f5e7c8, #e2b45e 60%, #ba7334);
+  }
+
+  .pq-keytag i { background: #526b4e; border-color: #d99a3d; }
+  .pq-feedback div span.is-positive { color: #d7e6b5; background: rgba(153, 187, 123, 0.13); }
+
+  .pq-interlude,
+  .pq-result { background: #292923; }
+
+  .pq-interlude__veil {
+    background: linear-gradient(180deg, rgba(35, 39, 32, 0.12), rgba(35, 32, 29, 0.94) 77%);
+  }
+
+  .pq-result__veil {
+    background: linear-gradient(180deg, rgba(36, 39, 31, 0.12), rgba(38, 34, 29, 0.62) 48%, #29231f 74%);
+  }
+
+  .pq-result__content {
+    background: rgba(48, 41, 35, 0.91);
+    border-color: rgba(217, 154, 61, 0.38);
+  }
+
+  .pq-result__score div { background: rgba(217, 154, 61, 0.1); border-left-color: #d99a3d; }
+}
