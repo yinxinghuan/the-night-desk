@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { nightDeskCartridge } from './cartridge/nightDesk';
 import { ghostpixelIdentity } from './identity/ghostpixel';
 import { detectLocale, formatName } from './i18n';
 import { usePortraitQuest } from './hooks/usePortraitQuest';
+import { usePreloadedAssets } from './hooks/usePreloadedAssets';
 import type { Localized, StatKey } from './types';
 import './PortraitQuest.less';
 
@@ -23,12 +24,34 @@ export default function PortraitQuest() {
   const copy = cartridge.copy[locale];
   const game = usePortraitQuest(cartridge, locale);
   const [scale, setScale] = useState(1);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const assetUrls = useMemo(
+    () => Array.from(new Set([
+      ...Object.values(identity.portraits),
+      ...Object.values(identity.scenes).filter((url): url is string => Boolean(url)),
+    ])),
+    [identity],
+  );
+  const preload = usePreloadedAssets(assetUrls);
 
   useEffect(() => {
-    const update = () => setScale(Math.min(window.innerWidth / 390, window.innerHeight / 844));
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const update = () => {
+      const width = viewport.clientWidth;
+      const height = viewport.clientHeight;
+      setScale(Math.min(width / 390, height / 844));
+    };
+    const observer = new ResizeObserver(update);
+    observer.observe(viewport);
     update();
     window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window.visualViewport?.addEventListener('resize', update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+      window.visualViewport?.removeEventListener('resize', update);
+    };
   }, []);
 
   const scene = game.isGameOver
@@ -36,15 +59,25 @@ export default function PortraitQuest() {
     : identity.scenes.intro;
 
   return (
+    <div className="pq-viewport" ref={viewportRef}>
     <main
       className={`pq-shell pq-shell--${cartridge.id}${game.isPlaying && Math.min(...STAT_KEYS.map((key) => game.stats[key])) < 18 ? ' is-critical' : ''}`}
-      style={{ width: 390, height: 844, transform: `scale(${scale})`, transformOrigin: 'center' }}
-      data-phase={game.isGameOver ? 'over' : game.isPlaying ? 'playing' : 'start'}
+      style={{ width: 390, height: 844, transform: `translate(-50%, -50%) scale(${scale})`, transformOrigin: 'center' }}
+      data-phase={!preload.ready ? 'loading' : game.isGameOver ? 'over' : game.isPlaying ? 'playing' : 'start'}
     >
       <div className="pq-shell__grain" />
       <div className="pq-shell__lamp" />
 
-      {!game.isPlaying && !game.isGameOver && (
+      {!preload.ready && (
+        <section className="pq-loading" role="status" aria-live="polite">
+          <div className="pq-loading__mark" aria-hidden="true"><i /><i /><i /></div>
+          <p>{copy.loading}</p>
+          <div className="pq-loading__track"><i style={{ width: `${preload.progress}%` }} /></div>
+          <span>{preload.progress}%</span>
+        </section>
+      )}
+
+      {preload.ready && !game.isPlaying && !game.isGameOver && (
         <section className="pq-start">
           {scene && <img className="pq-start__scene" src={scene} alt="" draggable={false} />}
           <div className="pq-start__veil" />
@@ -197,5 +230,6 @@ export default function PortraitQuest() {
         </section>
       )}
     </main>
+    </div>
   );
 }
